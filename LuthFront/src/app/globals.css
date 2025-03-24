@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  padding-top: 80px; /* Compensação para o header fixo */
+  font-family: Arial, sans-serif;
+  position: relative;
+  overflow-x: auto; /* Permitir rolagem horizontal */
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 102vw;
+  height: 102vh;
+  background-image: url("/fundo4.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transform: translate(-50%, -50%);
+  z-index: -1; /* Certifique-se que não sobrepõe o header */
+}
+
+.horizontal-scroll {
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap;
+  width: 100vw;
+}
+
+.item {
+  min-width: 200px;
+  height: 150px;
+  background-color: lightgray;
+  margin: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

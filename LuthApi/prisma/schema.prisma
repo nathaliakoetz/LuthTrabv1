@@ -1,0 +1,94 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model Marca {
+  id        Int         @id @default(autoincrement())
+  nome      String      @db.VarChar(30)
+  produtos  Produto[]
+  @@map("marcas")
+}
+
+
+model Produto {
+  id          Int       @id @default(autoincrement())
+  modelo      String    @db.VarChar(60)
+  ano         Int       @db.SmallInt
+  preco       Decimal   @db.Decimal(10, 2)
+  destaque    Boolean   @default(true)
+  foto        String   
+  acessorios  String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  marca       Marca     @relation(fields: [marcaId], references: [id])
+  marcaId     Int 
+  admin       Admin     @relation(fields: [adminId], references: [id])
+  adminId     Int       @default(1)
+  fotos       Foto[]
+  propostas   Proposta[]
+  @@map("produtos")
+}
+
+
+model Foto {
+  id          Int       @id @default(autoincrement())
+  descricao   String    @db.VarChar(30)
+  codigoFoto  String    @db.Text
+  produto     Produto   @relation(fields: [produtoId], references: [id])
+  produtoId   Int
+  @@map("fotos")
+}
+
+
+model Cliente {
+  id           String     @db.VarChar(36) @id @default(uuid())
+  nome         String     @db.VarChar(60)
+  email        String     @db.VarChar(60) @unique
+  senha        String     @db.VarChar(60)   
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt  
+  propostas    Proposta[]
+  @@map("clientes")
+}
+
+model Proposta {
+  id          Int       @id @default(autoincrement())
+  cliente     Cliente   @relation(fields: [clienteId], references: [id])
+  clienteId   String    @db.VarChar(36)
+  produto     Produto   @relation(fields: [produtoId], references: [id])
+  produtoId   Int
+  descricao   String    @db.VarChar(255)
+  resposta    String?   @db.VarChar(255)
+  interacoes  String?   @db.VarChar(255) // Campo para armazenar interações, por exemplo, em formato JSON
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt  
+  @@map("propostas")
+}
+
+
+model Admin {
+  id           Int      @id @default(autoincrement())
+  nome         String   @db.VarChar(60)
+  email        String   @db.VarChar(60) @unique
+  senha        String   @db.VarChar(60)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt  
+  produtos     Produto[]
+  @@map("admins")
+}
+
+
+
+

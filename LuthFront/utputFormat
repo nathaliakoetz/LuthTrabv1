@@ -1,0 +1,24 @@
+HTTP/1.1 404 Not Found
+Access-Control-Allow-Origin: *
+Cache-Control: public, max-age=0, must-revalidate
+Content-Length: 152
+Content-Security-Policy: default-src 'none'
+Content-Type: text/html; charset=utf-8
+Date: Wed, 04 Dec 2024 10:05:00 GMT
+Server: Vercel
+Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+X-Content-Type-Options: nosniff
+X-Powered-By: Express
+X-Vercel-Cache: MISS
+X-Vercel-Id: gru1::iad1::xg8bh-1733306700291-7a53ff398793
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Error</title>
+</head>
+<body>
+<pre>Cannot DELETE /propostas/</pre>
+</body>
+</html>
